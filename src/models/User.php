@@ -26,6 +26,58 @@ class User
         }
     }
 
+    // Tìm user theo email
+    public static function findByEmail($email)
+    {
+        $db = getDB();
+        if (!$db) {
+            return null;
+        }
+
+        try {
+            $stmt = $db->prepare("SELECT * FROM users WHERE email = ? AND status = 1 ");
+            $stmt->execute([$email]);
+            $data = $stmt->fetch();
+            if ($data) {
+                return new User($data);
+            }
+
+            return null;
+        } catch (PDOException $e) {
+            error_log("Loi khi tim email" . $e->getMessage());
+            return null;
+        }
+    }
+
+    // Xác thực đăng nhập email và pasword 
+    public static function authenticate($email, $password)
+    {
+        // Thuc hien tim user theo email
+        $user = self::findByEmail($email);
+        if (!$user) {
+            return null;
+        }
+        // Lay pass hash tu db 
+        $db = getDB();
+        if (!$db) {
+            return null;
+        }
+        try {
+            $stmt = $db->prepare("SELECT password FROM users WHERE id = ? ");
+            $stmt->execute([$user->id]);
+            $result = $stmt->fetch();
+
+            // Kiem tra so sanh password nhap vao password trong db bang password_verify
+            if ($result && password_verify($password, $result['password'])) {
+                return $user;
+            }
+            return null;
+        } catch (PDOException $e) {
+            error_log("Loi mat khau khong trung khop " . $e->getMessage());
+            return null;
+        }
+    }
+
     // Trả về tên người dùng để hiển thị
     public function getName()
     {
