@@ -3,6 +3,7 @@
 ## Cơ chế hoạt động
 
 ### 1. Output Buffering (ob_start/ob_get_clean)
+
     - Output Buffering: Dùng ob_start() để "bắt" tất cả nội dung HTML/PHP (echo, print...) vào một biến, không xuất ra màn hình ngay.
     - Sau đó dùng ob_get_clean() để lấy toàn bộ nội dung đó ra, gán vào biến $content.
 
@@ -12,12 +13,12 @@
 function view(string $view, array $data = []): void
 {
     $file = view_path($view);  // Lấy đường dẫn file layout.php
-    
-    extract($data, EXTR_OVERWRITE);  
+
+    extract($data, EXTR_OVERWRITE);
     // extract() chuyển mảng thành biến:
-    // ['content' => '...', 'title' => '...'] 
+    // ['content' => '...', 'title' => '...']
     // → $content = '...', $title = '...'
-    
+
     include $file;  // Include layout.php (lúc này $content đã là biến)
 }
 ```
@@ -78,3 +79,11 @@ view('layout', [
 - Nội dung giữa `ob_start()` và `ob_get_clean()` sẽ KHÔNG hiển thị trực tiếp
 - Chỉ khi gọi `view('layout', ['content' => $content])` thì nội dung mới được hiển thị
 
+## Thông tin Admin
+
+### Tài khoản đăng nhập
+
+- **Email/Username**: admin
+- **Mật khẩu**: admin@123456
+- **Lưu ý**: Vui lòng thay đổi mật khẩu ngay sau lần đăng nhập đầu tiên trong môi trường production
+- **Bảo mật**: Không chia sẻ thông tin này với những người không có quyền truy cập
