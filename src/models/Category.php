@@ -36,7 +36,7 @@ class Category
             $params = [];
 
             // Lọc theo trạng thái 
-            if ($status !== null && $status !== ' ') {
+            if ($status !== null && $status !== '') {
                 $where[] = "status = ?";
                 $params[] = (int)$status;
             }
@@ -52,22 +52,16 @@ class Category
             // Viết câu lệnh SQL
             $sql = "SELECT * FROM categories";
             if (!empty($where)) {
-                $sql .= " WHERE " . implode("AND", $where);
+                $sql .= " WHERE " . implode(" AND ", $where);
             }
 
-            $sql .= "ORDER BY created_at DESC";
+            $sql .= " ORDER BY created_at DESC";
 
             $stmt = $db->prepare($sql);
             $stmt->execute($params);
 
-            $result = $stmt->fetchAll();
+            return $result = $stmt->fetchAll();
             // $categories = [];
-
-            $categories = [];
-            foreach ($result as $row) {
-                $categories[] = $row;
-            }
-            return $categories;
         } catch (PDOException $e) {
             error_log("Lỗi khi lấy dữ liệu danh mục tour" . $e->getMessage());
             return [];
