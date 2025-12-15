@@ -15,6 +15,7 @@ require_once __DIR__ . '/src/models/Category.php';
 require_once __DIR__ . '/src/controllers/HomeController.php';
 require_once __DIR__ . '/src/controllers/AuthController.php';
 require_once __DIR__ . '/src/controllers/CategoryController.php';
+require_once __DIR__ . '/src/controllers/GuideController.php';
 
 // Khởi tạo các controller
 $homeController = new HomeController();
@@ -39,6 +40,11 @@ match ($act) {
 
     // Đường dẫn quản lý danh mục tour 
     'categories' => $categoryController->index(),
+
+    // =====HDV=====
+
+    'guide/schedules' => (new GuideController())->schedule(),
+    'guide/schedule-detail' => (new GuideController())->scheduleDetail(),
 
     // Đường dẫn không tồn tại
     default => $homeController->notFound(),

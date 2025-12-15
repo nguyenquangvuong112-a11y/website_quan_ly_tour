@@ -14,7 +14,7 @@ return [
         'host' => 'localhost', // Host cơ sở dữ liệu
         'name' => 'website_ql_tour', // Tên cơ sở dữ liệu
         'user' => 'root', // Tên người dùng
-        'pass' => '345', // Mật khẩu
+        'pass' => '', // Mật khẩu
         'charset' => 'utf8mb4', // Mã hóa
     ],
 ];

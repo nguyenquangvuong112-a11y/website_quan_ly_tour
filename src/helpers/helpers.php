@@ -134,7 +134,7 @@ function requireAdmin()
     requireLogin();
     
     if (!isAdmin()) {
-        header('Location: ' . BASE_URL);
+        header('Location: ' . BASE_URL . '?act=home');
         exit;
     }
 }
@@ -145,7 +145,7 @@ function requireGuideOrAdmin()
     requireLogin();
     
     if (!isGuide() && !isAdmin()) {
-        header('Location: ' . BASE_URL);
+        header('Location: ' . BASE_URL . '?act=home');
         exit;
     }
 }
